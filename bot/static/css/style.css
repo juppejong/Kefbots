@@ -1,0 +1,396 @@
+/* Algemene stijlen voor de website */
+
+/* Basis layout */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: #333;
+}
+
+.container {
+    width: 100% !important;
+    margin: 0px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Button Styles */
+.btn-light, .btn-outline-light {
+    border-radius: 30px;
+    padding: 10px 30px;
+    font-size: 1.2rem;
+}
+
+.btn-light:hover, .btn-outline-light:hover {
+    background-color: #1abc9c;
+    color: white;
+}
+
+
+/* Hero Section */
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 50px 0;
+    background: linear-gradient(to right, rgba(17, 16, 16, 0), rgba(250, 249, 249, 0.8)); /* Gradient achtergrond */
+    background-size: cover;
+    background-position: center;
+    color: rgb(80, 78, 78);
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2); /* Voeg schaduw toe */
+    border-radius: 40px; /* Zorg ervoor dat de canvas zelf afgeronde hoeken heeft */
+    animation: fadeBackground 3s ease-in-out; /* Fade-in effect voor achtergrond */
+}
+
+/* Fade-in animatie voor achtergrond */
+@keyframes fadeBackground {
+    0% {
+        background: linear-gradient(to right, rgba(250, 249, 249, 0), rgba(250, 249, 249, 0)); /* Begin met transparante gradient */
+    }
+    100% {
+        background: linear-gradient(to right, rgba(250, 249, 249, 0.8), rgba(250, 249, 249, 0.8)); /* Eindig met dezelfde lichte gradient kleur */
+    }
+}
+
+.hero .btn {
+    background-color: #706f6f;
+    color: #fdfdfd;
+}
+
+.hero .btn:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+#rsi-graph-container, #ma-graph-container {
+    max-width: 1800px; /* Pas aan naar wens */
+    max-height: 250px; /* Pas aan naar wens */
+    margin: 0 auto;   /* Centraal uitlijnen */
+}
+
+
+
+/* Knoppen */
+/* Knoppen */
+.btn {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Voeg schaduw toe voor extra diepte */
+}
+
+
+/* Navigatiebar */
+.navbar {
+    background-color: #1a202c;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.navbar a {
+    color: #e2e8f0;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #ffffff;
+    background-color: #2d3748;
+    border-radius: 8px;
+}
+
+/* Icoontjes in navbar */
+.navbar-nav .nav-link i {
+    font-size: 1.3rem;
+    color: #17a2b8;
+    margin-right: 8px;
+}
+
+.navbar-brand i {
+    color: #ffc107;
+    margin-right: 5px;
+}
+
+.navbar-nav .nav-link:hover i {
+    color: #fff;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px 0;
+    background-color: #1a202c;
+    color: #a0aec0;
+    margin-top: 40px;
+    border-top: 1px solid #2d3748;
+}
+
+/* Formulieren */
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Tabellen */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Responsiviteit */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .navbar a {
+        padding: 10px;
+        margin: 5px 0;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+/* Extra animaties */
+a, button {
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar a:hover, .btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Logboek */
+.bg-light {
+    background-color: #f8f9fa !important;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.bg-secondary {
+    background-color: #1e1e1f !important;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Stijlen voor het Dashboard */
+.card {
+    border-radius: 15px;
+    background: linear-gradient(to right, #2C3E50, #34495E);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.card-title {
+
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #171718; /* Blauw voor de asset naam */
+}
+
+.card-text {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.fas.fa-coins {
+    color: #ffc107; /* Gouden kleur voor de icoon */
+}
+
+/* Responsiviteit */
+@media (max-width: 768px) {
+    .card {
+        margin: 10px 0;
+    }
+}
+
+
+/* Animatie voor knoppen */
+.animate__animated.animate__fadeIn {
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Testimonials */
+/* Testimonial Section */
+.testimonial {
+    background: #ffffff;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+.testimonial p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.testimonial footer {
+    font-weight: bold;
+    color: #1abc9c;
+}
+
+.testimonial:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#log-container p {
+    font-size: 19px;  /* Pas de grootte van de logberichten aan */
+}
+
+/* Status Indicator */
+.badge {
+    font-size: 1.5rem;
+    padding: 12px 20px;
+    border-radius: 50px;
+}
+
+.grid-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 kolommen */
+    gap: 20px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .grid-item {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+    height: auto;
+    filter: grayscale(100%) opacity(50%);
+    transition: filter 0.3s ease-in-out;
+    animation: fadeInUp 0.5s ease-out forwards;
+  }
+  
+  .grid-item img {
+    width: 100%;
+    height: auto;
+    max-width: none;
+  }
+  
+  .grid-item:hover {
+    filter: grayscale(0%) opacity(100%);
+  }
+  
+  /* Fade-in animatie */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Fade-in animatie */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  /* Pas fade-in toe op de elementen die je wilt */
+  .fade-in {
+    animation: fadeIn 1.5s ease-out;
+  }
+  
+  .card, .btn, .grid-item, .testimonial {
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out forwards;
+  }
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

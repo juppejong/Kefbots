@@ -1,0 +1,422 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Trading Bot{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+
+    <style>
+        /* Ensure the ticker column stays below the navbar */
+        #ticker-column {
+            position: relative;  /* Zorg ervoor dat de kolom meebeweegt met de pagina fixed voor vast */
+            top: 0px;  /* Verhoog dit naar de gewenste waarde (bijvoorbeeld 120px of hoger) */
+            right: 0;
+            width: 220px;
+            background-color: #fafafa;
+            padding: 5px;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;  /* Kleine marge toevoegen als dat mooi staat */
+            z-index: 1000;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            height: 114vh; /* Zorg ervoor dat de ticker-kolom een vaste hoogte heeft */
+            padding: 2px; /* Voeg padding toe voor wat ruimte rondom */
+            border-radius: 10px;
+            margin-left: auto;
+        }
+
+        .ticker-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 10px;
+            margin-top: 10px;
+            flex-direction: column; /* Zorg ervoor dat de tickers onder elkaar staan */
+            height: auto; /* Laat de inhoud flexibel zijn */
+            border-radius: 10px;
+            align-items: center;
+            
+        }
+
+        .ticker-card {
+            background-color: #343a40;
+            color: white;
+            border-radius: 10px;
+            width: 200px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            height: 160px;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;  /* Zorgt dat de kaart in het midden van de container staat */
+        }
+
+        .ticker-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .ticker-card .pair {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #f8f9fa;
+        }
+
+        .ticker-card .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .ticker-card .time {
+            font-size: 14px;
+            color: #ddd;
+            margin-top: 5px;
+        }
+
+        .ticker-card canvas {
+            height: 70px !important;
+            width: 100% !important;
+            background-color: #212529;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}"><i class="fas fa-robot"></i> Kef Bot</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard' %}">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'settings' %}">
+                            <i class="fas fa-cogs"></i> Instellingen
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'strategies' %}">
+                            <i class="fas fa-lightbulb"></i> Strategieën
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'autotrade' %}">
+                            <i class="fas fa-play-circle"></i> AutoTrade
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">
+                            <i class="fas fa-info-circle"></i> Over
+                        </a>
+                    </li>
+                    
+                </ul>
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link nav-link" style="display: inline; padding: 0;">
+                                <i class="fas fa-sign-out-alt"></i> Uitloggen
+                            </button>
+                        </form>
+                    
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">
+                                <i class="fas fa-sign-in-alt"></i> Inloggen
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">
+                                <i class="fas fa-user-plus"></i> Registreren
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid" style="width: 100%;">
+        <div class="row">
+            <!-- Main Content Area -->
+            <div class="col-lg-10">
+                {% block content %}{% endblock %}
+            </div>
+    
+            <!-- Ticker Column -->
+            <div class="col-lg-3" id="ticker-column">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 style="color: #28a745;">Most Traded Pairs</h5>
+                    </div>
+                    <div class="card-body" id="ticker-content">
+                        <div id="ticker-wrapper" class="ticker-container">
+                            <!-- Dynamically loading tickers here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Modal voor grotere grafiek -->
+    <div class="modal fade" id="chartModal" tabindex="-1" aria-labelledby="chartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="chartModalLabel">Grafiek</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <canvas id="modalChartCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to fetch tickers from Kraken API
+        async function fetchTickers() {
+            const response = await fetch('https://api.kraken.com/0/public/Ticker?pair=SOLUSD,ETHUSD,LTCUSD,ADAUSD,XRPUSD,BTCEUR');
+            const data = await response.json();
+            const tickers = data.result;
+            
+            const tickerWrapper = document.getElementById('ticker-wrapper');
+            tickerWrapper.innerHTML = '';  // Clear any existing tickers or loading text
+            tickerWrapper.classList.remove('loading-text');  // Verwijder eventuele 'loading' class
+
+            // Loop through pairs and create individual cards for each
+            Object.keys(tickers).forEach(async pair => {
+                const ticker = tickers[pair];
+
+                    // Rond de prijs af naar 2 decimalen
+                const roundedPrice = parseFloat(ticker.c[0]).toFixed(3);
+
+                // Create a new card for the ticker
+                const card = document.createElement('div');
+                card.classList.add('ticker-card');
+                card.setAttribute('data-pair', pair);  // Store the pair data in the card
+                
+                // Create a canvas element for the mini chart
+                const canvas = document.createElement('canvas');
+                canvas.id = `chart-${pair}`; // Unique ID for each chart
+
+                // Fetch real price data for the pair (last 15 minutes data from Kraken OHLC API)
+                const ohlcResponse = await fetch(`https://api.kraken.com/0/public/OHLC?pair=${pair}&interval=5`);
+                const ohlcData = await ohlcResponse.json();
+                const ohlcPrices = ohlcData.result[pair];
+
+                // Process the data into a format usable by Chart.js
+                const chartData = {
+                    labels: ohlcPrices.map(data => new Date(data[0] * 1000).toLocaleTimeString()), // Use the timestamp for labels
+                    datasets: [{
+                        label: 'Price',
+                        data: ohlcPrices.map(data => data[4]), // Close price is at index 4
+                        borderColor: '#28a745',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                };
+
+                const chartOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        zoom: {
+                            pan: {
+                                enabled: true, // Zet pan in op 'true' om de grafiek te verslepen
+                                mode: 'xy', // Sta panning langs zowel de x- als y-as toe
+                                speed: 10, // Snelheid van pan
+                            },
+                            zoom: {
+                                enabled: true, // Zet zoom in op 'true'
+                                mode: 'xy', // Zoom zowel langs de x- als y-as
+                                speed: 0.1, // Zoomsnelheid aanpassen
+                                sensitivity: 3, // Gevoeligheid voor het zoomen
+                                threshold: 2, // Minimum muisbeweging voor zoom
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: false,
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    elements: {
+                        line: {
+                            tension: 0.2
+                        },
+                        point: {
+                            radius: 0
+                        }
+                    }
+                };
+
+
+                // Create the chart using the fetched data
+                new Chart(canvas, {
+                    type: 'line',
+                    data: chartData,
+                    options: chartOptions
+                });
+
+                // Add card contents and canvas for chart
+                card.innerHTML = `
+                    <div class="pair">${pair}</div>
+                    <div class="price">$${roundedPrice}</div>
+                
+                `;
+                
+                // Add the event listener to open modal with the chart when clicked
+                card.addEventListener('click', () => {
+                    openModal(pair, ohlcPrices);
+                });
+
+                card.appendChild(canvas);
+                tickerWrapper.appendChild(card);
+            });
+        }
+
+
+        // Open the modal and load the chart
+        function openModal(pair, ohlcPrices) {
+            // Get the modal and canvas
+            const modal = new bootstrap.Modal(document.getElementById('chartModal'));
+            const modalCanvas = document.getElementById('modalChartCanvas');
+
+            // Clear the previous chart if there is one
+            const existingChart = modalCanvas.chart;
+            if (existingChart) {
+                existingChart.destroy(); // Destroy the old chart before creating a new one
+            }
+
+            // Process the data into chart format for the modal
+            const chartData = {
+                labels: ohlcPrices.map(data => new Date(data[0] * 1000).toLocaleTimeString()),
+                datasets: [{
+                    label: `Price (${pair})`,
+                    data: ohlcPrices.map(data => data[4]), // Close price is at index 4
+                    borderColor: '#28a745',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            };
+
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    zoom: {
+                        pan: {
+                            enabled: true, // Enable panning
+                            mode: 'xy', // Allow panning on both axes
+                            speed: 10,
+                        },
+                        zoom: {
+                            enabled: true, // Enable zooming
+                            mode: 'xy', // Allow zooming on both axes
+                            speed: 0.1,
+                            sensitivity: 3,
+                            threshold: 2,
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: false,
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                elements: {
+                    line: {
+                        tension: 0.2
+                    },
+                    point: {
+                        radius: 0
+                    }
+                }
+            };
+
+            // Create the chart in the modal
+            const chart = new Chart(modalCanvas, {
+                type: 'line',
+                data: chartData,
+                options: chartOptions
+            });
+
+            // Store the chart on the canvas element to easily access later
+            modalCanvas.chart = chart;
+
+            // Show the modal
+            modal.show();
+        }
+
+
+
+
+
+    
+        // Fetch tickers when the page loads
+        window.onload = () => {
+            fetchTickers();
+    
+            // Set an interval to fetch the tickers every 30 seconds
+            setInterval(fetchTickers, 30000);  // 30000 milliseconds = 30 seconds
+        };
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+

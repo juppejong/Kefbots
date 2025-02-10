@@ -1,0 +1,105 @@
+{% extends 'bot/base.html' %}
+
+{% block title %}Strategieën{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4 text-primary">Beheer je Strategieën</h2>
+    <p class="text-center text-muted mb-5">Kies en pas je trading-strategieën aan die het beste passen bij jouw handelsstijl.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="row g-4">
+            <!-- Simple Moving Average -->
+            <div class="col-md-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Simple Moving Average (SMA)</h5>
+                        <p class="card-text">De Simple Moving Average-strategie gebruikt het gemiddelde van slotkoersen over een bepaalde periode om trends te identificeren.</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Voordelen:</strong>
+                                <ul>
+                                    <li>Eenvoudig te implementeren en begrijpen.</li>
+                                    <li>Helpt bij het identificeren van trends op lange termijn.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Nadelen:</strong>
+                                <ul>
+                                    <li>Kan traag reageren op snelle marktveranderingen.</li>
+                                    <li>Niet geschikt voor volatiele markten.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="radio" name="strategy" value="simple_moving_average" id="smaStrategy">
+                            <label class="form-check-label" for="smaStrategy">Selecteer deze strategie</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RSI Strategie -->
+            <div class="col-md-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">RSI Strategie</h5>
+                        <p class="card-text">De Relative Strength Index (RSI) strategie identificeert overgekochte en oververkochte markten om koop- en verkoopmomenten te bepalen.</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Voordelen:</strong>
+                                <ul>
+                                    <li>Effectief bij het signaleren van omkeringen in de markt.</li>
+                                    <li>Helpt overbought en oversold condities te identificeren.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Nadelen:</strong>
+                                <ul>
+                                    <li>Kan minder betrouwbaar zijn in trending markten.</li>
+                                    <li>Vereist aanpassing voor verschillende marktomstandigheden.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="radio" name="strategy" value="rsi_strategy" id="rsiStrategy">
+                            <label class="form-check-label" for="rsiStrategy">Selecteer deze strategie</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bollinger Bands -->
+            <div class="col-md-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Bollinger Bands</h5>
+                        <p class="card-text">Bollinger Bands gebruiken standaarddeviaties rond een voortschrijdend gemiddelde om prijsschommelingen en volatiliteit te meten.</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Voordelen:</strong>
+                                <ul>
+                                    <li>Geeft inzicht in marktvolatiliteit.</li>
+                                    <li>Kan helpen bij het identificeren van potentiële breakouts.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Nadelen:</strong>
+                                <ul>
+                                    <li>Kan valse signalen geven in zijwaartse markten.</li>
+                                    <li>Afhankelijk van nauwkeurige parameterinstellingen.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="radio" name="strategy" value="bollinger_bands" id="bollingerStrategy">
+                            <label class="form-check-label" for="bollingerStrategy">Selecteer deze strategie</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success px-5 py-2">Opslaan</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+

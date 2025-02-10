@@ -1,0 +1,59 @@
+{% extends 'bot/base.html' %}
+
+{% block title %}Trade Geschiedenis{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0"><i class="fas fa-history"></i> Laatste 15 Trades</h2>
+        </div>
+        <div class="card-body">
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                </div>
+            {% endif %}
+
+            {% if trades %}
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Datum</th>
+                                <th scope="col">Pair</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Volume</th>
+                                <th scope="col">Prijs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for trade in trades %}
+                                <tr>
+                                    <td>{{ trade.readable_time }}</td>
+                                    <td>{{ trade.pair }}</td>
+                                    <td>
+                                        <span class="badge {% if trade.type == 'buy' %}bg-success{% else %}bg-danger{% endif %}">
+                                            {{ trade.type|title }}
+                                        </span>
+                                    </td>
+                                    <td>{{ trade.vol }}</td>
+                                    <td>${{ trade.price }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info text-center" role="alert">
+                    <i class="fas fa-info-circle"></i> Geen trades gevonden.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+

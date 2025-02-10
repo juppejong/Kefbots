@@ -1,0 +1,4 @@
+web: gunicorn tradingbot_project.wsgi
+
+
+

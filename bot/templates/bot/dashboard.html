@@ -1,0 +1,94 @@
+{% extends 'bot/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="display-4 text-center">Welkom, {{ request.user.username }}</h1>
+
+    <!-- Balans Overzicht -->
+    <div class="my-4 text-center">
+        <h2>Balans Overzicht</h2>
+        {% if balance %}
+            <div class="row justify-content-center">
+                {% for asset, amount in balance.items %}
+                    <div class="col-md-2 mb-3">
+                        <div class="card text-center shadow-sm border-0">
+                            <div class="card-body">
+                                <i class="fas fa-coins fa-2x text-primary mb-2"></i>
+                                <h5 class="card-title">{{ asset }}</h5>
+                                <p class="card-text fs-5">{{ amount|floatformat:3 }} EUR</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">Geen balans beschikbaar. Controleer je API-sleutels.</p>
+        {% endif %}
+    </div>
+
+    <!-- Status van de Bot -->
+    <div class="text-center my-4">
+        <h2>Status van de Bot</h2>
+        <p>
+            {% if is_running %}
+                <span class="badge bg-success fs-5">De bot is actief en draait.</span>
+            {% else %}
+                <span class="badge bg-danger fs-5">De bot is gestopt.</span>
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- Recente Trades -->
+    <div class="my-4">
+        <h3><i class="fas fa-exchange-alt"></i> Laatste 15 Trades</h3>
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-circle"></i> {{ error }}
+            </div>
+        {% endif %}
+
+        {% if trades %}
+            <div class="table-responsive">
+                <table class="table table-sm table-hover shadow-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Datum</th>
+                            <th scope="col">Pair</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Volume</th>
+                            <th scope="col">Prijs</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trade in trades %}
+                            <tr>
+                                <td>{{ trade.readable_time }}</td>
+                                <td>{{ trade.pair }}</td>
+                                <td>
+                                    <span class="badge {% if trade.type == 'buy' %}bg-success{% else %}bg-danger{% endif %}">
+                                        {{ trade.type|title }}
+                                    </span>
+                                </td>
+                                <td>{{ trade.vol }}</td>
+                                <td>${{ trade.price }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center" role="alert">
+                <i class="fas fa-info-circle"></i> Geen recente trades gevonden.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+

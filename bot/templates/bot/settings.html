@@ -1,0 +1,153 @@
+{% extends 'bot/base.html' %}
+
+{% block title %}Instellingen{% endblock %}
+
+{% block content %}
+
+<!-- CSS voor visuele styling -->
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    h2, h4 {
+        color: #333;
+    }
+
+    .card {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-control, .form-select {
+        border-radius: 10px;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 10px 30px;
+        font-size: 1.1rem;
+        border-radius: 10px;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+
+    .list-group-item {
+        background-color: #f8f9fa;
+        border: none;
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+
+    .list-group-item strong {
+        color: #333;
+    }
+</style>
+
+<!-- Instellingenpagina inhoud -->
+<div class="container py-4 fade-in">
+    <h2 class="text-center mb-4">API & Handelsinstellingen</h2>
+
+    <div class="card shadow-lg mb-4">
+        <div class="card-body p-4">
+            <h4 class="mb-3"><i class="bi bi-key-fill me-2"></i>API Instellingen</h4>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label"><i class="bi bi-person-badge me-1"></i>API Key</label>
+                    <input type="text" class="form-control" name="api_key" value="{{ settings.api_key }}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label"><i class="bi bi-shield-lock me-1"></i>API Secret</label>
+                    <input type="password" class="form-control" name="api_secret" value="{{ settings.api_secret }}" required>
+                </div>
+
+                <h4 class="mt-4 mb-3"><i class="bi bi-bell-fill me-2"></i>Notificatie Instellingen</h4>
+                <div class="mb-3">
+                    <label class="form-label">Notificatie Voorkeur</label>
+                    <select class="form-select" name="notification_preference">
+                        <option value="email" {% if settings.notification_preference == "email" %}selected{% endif %}>E-mail</option>
+                        <option value="sms" {% if settings.notification_preference == "sms" %}selected{% endif %}>SMS</option>
+                        <option value="none" {% if settings.notification_preference == "none" %}selected{% endif %}>Geen</option>
+                    </select>
+                </div>
+
+                <h4 class="mt-4 mb-3"><i class="bi bi-graph-up-arrow me-2"></i>Handelsinstellingen</h4>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Beurs</label>
+                        <input type="text" class="form-control" name="exchange" value="{{ settings.exchange }}" placeholder="Bijv. kraken">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Volume</label>
+                        <input type="number" class="form-control" name="volume" value="{{ settings.volume }}" min="0" step="0.01">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Trading Pair</label>
+                        <input type="text" class="form-control" name="pair" value="{{ settings.pair }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Strategie</label>
+                        <input type="text" class="form-control" name="strategy" value="{{ settings.strategy }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Candle Periode (min)</label>
+                        <input type="number" class="form-control" name="candle_period" value="{{ settings.candle_period|default:1 }}" min="1">
+                    </div>
+                    <!-- Buy Margin -->
+                    <div class="col-md-6">
+                        <label class="form-label">Buy Margin</label>
+                        <input type="number" class="form-control" name="buy_margin" value="{{ settings.buy_margin|default:0.0 }}" min="0" step="0.01">
+                    </div>
+
+                    <!-- Sell Margin -->
+                    <div class="col-md-6">
+                        <label class="form-label">Sell Margin</label>
+                        <input type="number" class="form-control" name="sell_margin" value="{{ settings.sell_margin|default:0.0 }}" min="0" step="0.01">
+                    </div>
+
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">Opslaan</button>
+                </div>
+            </form>
+
+            {% if error %}
+                <div class="alert alert-danger mt-4">{{ error }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card shadow-lg">
+        <div class="card-body p-4">
+            <h4 class="mb-3"><i class="bi bi-gear-fill me-2"></i>Huidige Instellingen</h4>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>API Key:</strong> {{ settings.api_key }}</li>
+                <li class="list-group-item"><strong>API Secret:</strong> {{ settings.api_secret }}</li>
+                <li class="list-group-item"><strong>Notificatie voorkeur:</strong> {{ settings.notification_preference }}</li>
+                <li class="list-group-item"><strong>Beurs:</strong> {{ settings.exchange }}</li>
+                <li class="list-group-item"><strong>Volume:</strong> {{ settings.volume }}</li>
+                <li class="list-group-item"><strong>Trading Pair:</strong> {{ settings.pair }}</li>
+                <li class="list-group-item"><strong>Strategie:</strong> {{ settings.strategy }}</li>
+                <li class="list-group-item"><strong>Candle Periode:</strong> {{ settings.candle_period }} minuten</li>
+                <li class="list-group-item"><strong>Buy Margin:</strong> {{ settings.buy_margin }}%</li>
+                <li class="list-group-item"><strong>Sell Margin:</strong> {{ settings.sell_margin }}%</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

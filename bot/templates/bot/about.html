@@ -1,0 +1,138 @@
+{% extends "bot/base.html" %}
+
+{% block content %}
+<div class="container mt-5 space-y-8">
+    <!-- Header Section -->
+    <h1 class="text-4xl font-bold text-center mb-6 text-indigo-600">🚀 Over Onze Handelsbot</h1>
+    <p class="text-lg text-gray-700 text-center mb-8">
+        Welkom bij onze geavanceerde <strong>cryptocurrency handelsbot</strong>! Automatiseer en optimaliseer je handelsactiviteiten eenvoudig 
+        met behulp van de <strong>Kraken API</strong>. Voer je API-sleutels in en laat de bot het werk voor je doen!
+    </p>
+
+
+
+    <!-- Accordion voor Functionaliteiten -->
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item bg-white shadow-lg rounded-xl mb-4">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button text-xl font-semibold text-indigo-600" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <i class="fas fa-cogs"></i> Belangrijkste Functionaliteiten
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body text-gray-700">
+                    <ul class="space-y-4">
+                        <li><i class="fas fa-tachometer-alt text-green-500"></i> <strong>Dashboard:</strong> Bekijk je balans en recente handelsgeschiedenis direct vanuit de Kraken exchange.</li>
+                        <li><i class="fas fa-robot text-blue-500"></i> <strong>Automatisch Handelen:</strong> Stel strategieën in en laat de bot trades uitvoeren.</li>
+                        <li><i class="fas fa-chart-line text-purple-500"></i> <strong>Visualisatie:</strong> Gebruik geavanceerde grafieken zoals RSI voor marktanalyse.</li>
+                        <li><i class="fas fa-sliders-h text-yellow-500"></i> <strong>Instellingen:</strong> Pas API-sleutels, handelsparen en volumes aan.</li>
+                        <li><i class="fas fa-lock text-red-500"></i> <strong>Veiligheid:</strong> Alleen toegankelijk voor ingelogde gebruikers.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gebruikte Technologieën -->
+        <div class="accordion-item bg-white shadow-lg rounded-xl mb-4">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button text-xl font-semibold text-indigo-600" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <i class="fas fa-tools"></i> Gebruikte Technologieën
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body text-gray-700">
+                    <ul class="space-y-4">
+                        <li><i class="fab fa-python text-green-500"></i> <strong>Django:</strong> Voor het beheren van gebruikers en weergaven.</li>
+                        <li><i class="fas fa-exchange-alt text-blue-500"></i> <strong>Kraken API:</strong> Voor directe integratie met de exchange.</li>
+                        <li><i class="fas fa-chart-pie text-purple-500"></i> <strong>Plotly:</strong> Voor interactieve grafieken.</li>
+                        <li><i class="fas fa-database text-yellow-500"></i> <strong>Pandas & NumPy:</strong> Voor gegevensverwerking en indicatorberekeningen.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hoe Werkt de Handelsbot? -->
+        <div class="accordion-item bg-white shadow-lg rounded-xl mb-4">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button text-xl font-semibold text-indigo-600" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <i class="fas fa-brain"></i> Hoe Werkt de Handelsbot?
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body text-gray-700">
+                    <p>De handelsbot gebruikt slimme algoritmes en real-time marktdata om automatisch koop- en verkooporders te plaatsen. Hieronder zie je hoe de <strong>run_bot</strong> functie stap voor stap werkt:</p>
+                    <ol class="space-y-4 list-decimal list-inside">
+                        <li><strong>Real-time Data:</strong> De bot haalt voortdurend de laatste marktgegevens op van de Kraken exchange.</li>
+                        <li><strong>Signaalanalyse:</strong> Op basis van jouw gekozen strategie bepaalt de bot of er een koop- of verkoopsignaal is.</li>
+                        <li><strong>Dynamische Prijsstrategie:</strong>
+                            <ul class="list-disc ml-5">
+                                <li>Bij een koopsignaal wacht de bot tot de prijs minstens 0,1% stijgt voordat hij koopt.</li>
+                                <li>Bij een verkoopsignaal wacht de bot tot de prijs minstens 0,1% daalt voordat hij verkoopt.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Automatische Orders:</strong> Zodra de voorwaarden zijn bereikt, plaatst de bot automatisch een order via de Kraken API.</li>
+                        <li><strong>Logging & Foutafhandeling:</strong> Alle acties worden gelogd en bij fouten stopt de bot automatisch.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hoe te Gebruiken -->
+        <div class="accordion-item bg-white shadow-lg rounded-xl mb-4">
+            <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button text-xl font-semibold text-indigo-600" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    <i class="fas fa-play-circle"></i> Hoe Te Gebruiken?
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                <div class="accordion-body text-gray-700">
+                    <ol class="space-y-4 list-decimal list-inside">
+                        <li>Ga naar het <a href="{% url 'dashboard' %}" class="text-indigo-500 font-medium">Dashboard</a> en voer je Kraken API-sleutels in.</li>
+                        <li>Pas je <a href="{% url 'settings' %}" class="text-indigo-500 font-medium">Instellingen</a> aan om je handelsstrategieën te definiëren.</li>
+                        <li>Start de bot via de <a href="{% url 'autotrade' %}" class="text-indigo-500 font-medium">AutoTrade</a> pagina en bekijk de resultaten in de logboeken.</li>
+                        <li>Stop de bot wanneer je wilt en analyseer je handelsgeschiedenis via de <a href="{% url 'history' %}" class="text-indigo-500 font-medium">Geschiedenis</a> pagina.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Grafiek Sectie -->
+        <div class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-center text-indigo-600 mb-6">Statistieken en Handelsresultaten</h2>
+            <div id="statistical-graph" class="text-center"></div>
+        </div>
+    
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script>
+            var data = [{
+                type: 'scatter',
+                mode: 'lines+markers',
+                x: ['2025-01-01', '2025-01-02', '2025-01-03', '2025-01-04', '2025-01-05'],  // Tijd
+                y: [1000, 1200, 1500, 1400, 1700],  // Winst/Verlies (bijvoorbeeld)
+                marker: {color: 'blue', size: 8},
+            }];
+            
+            var layout = {
+                title: 'Dagelijkse Winst en Verlies',
+                xaxis: { title: 'Datum' },
+                yaxis: { title: 'Winst/Verlies in $' },
+                template: 'plotly',
+                plot_bgcolor: '#f9fafb',
+                paper_bgcolor: '#f9fafb',
+            };
+    
+            Plotly.newPlot('statistical-graph', data, layout);
+        </script>
+
+    <p class="text-center text-gray-700 mt-6">
+        Heb je vragen of feedback? <strong>Neem gerust contact met ons op!</strong>
+    </p>
+</div>
+{% endblock %}
+
+
+
+
+
+

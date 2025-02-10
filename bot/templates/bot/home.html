@@ -1,0 +1,123 @@
+{% extends 'bot/base.html' %}
+
+{% block title %}Welkom bij TradingBot{% endblock %}
+
+{% block content %}
+
+
+
+<!-- Hero Section -->
+<!-- Hero Section -->
+<section class="hero text-center py-3 fade-in" style="width: 100%; background-size: cover; background-position: center; padding: 40px 0; animation: fadeBackground 3s ease-in-out;">
+    <div class="container">
+        <h1 class="display-3 fw-bold text">Welkom bij <span class="display-4 fw-bold">Kef-Bot</span></h1>
+        <p class="lead text mb-4">Automatiseer je handelsstrategieën met de kracht van technologie en data.</p>
+        <div class="d-flex justify-content-center gap-3 mt-4">
+            <a href="{% url 'autotrade' %}" class="btn btn-light btn-lg shadow fade-in">Start AutoTrading</a>
+            <a href="{% url 'strategies' %}" class="btn btn-outline-light btn-lg shadow fade-in">Bekijk Strategieën</a>
+        </div>
+    </div>
+</section>
+
+
+<!-- Kenmerken Sectie -->
+<!-- Kenmerken Sectie -->
+<section class="container mt-3 fade-in">
+    <h2 class="text-center mb-2">Onze Kenmerken</h2>
+    <div class="row text-center">
+        <div class="col-md-4 mb-2">
+            <div class="card h-100 bg-dark text-light shadow-lg border-0 rounded fade-in">
+                <div class="card-body" style="padding: 15px;">
+                    <i class="bi bi-bar-chart-line display-4 mb-2"></i>
+                    <h5 class="card-title">Geavanceerde Analyse</h5>
+                    <p class="card-text">Gebruik krachtige indicatoren zoals RSI, Bollinger Bands en meer om slimme handelsbeslissingen te nemen.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="card h-100 bg-dark text-light shadow-lg border-0 rounded fade-in">
+                <div class="card-body" style="padding: 15px;">
+                    <i class="bi bi-graph-up display-4 mb-2"></i>
+                    <h5 class="card-title">Realtime Data</h5>
+                    <p class="card-text">Altijd up-to-date met live marktgegevens en prijsfluctuaties, zodat je geen kans mist.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="card h-100 bg-dark text-light shadow-lg border-0 rounded fade-in">
+                <div class="card-body" style="padding: 15px;">
+                    <i class="bi bi-shield-lock display-4 mb-2"></i>
+                    <h5 class="card-title">Veilig en Betrouwbaar</h5>
+                    <p class="card-text">Beveiligde API-integraties zorgen voor veilige transacties, zodat je altijd met vertrouwen kunt handelen.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Live Status Indicator -->
+<section class="text-center mt-5">
+    <h3>Status van de Bot:</h3>
+    {% if is_running %}
+        <span class="badge bg-success fs-4 p-2"><i class="bi bi-check-circle-fill"></i> Actief</span>
+    {% else %}
+        <span class="badge bg-danger fs-4 p-2"><i class="bi bi-x-circle-fill"></i> Gestopt</span>
+    {% endif %}
+</section>
+
+
+<div class="grid-gallery">
+    <div class="grid-item" style="animation-delay: 0.3s;">
+      <a href="" target="_blank">
+        <img src="static/files/kraken.jpg" alt="kraken" style="width: 200px; height: auto;">
+      </a>
+    </div>
+    <div class="grid-item" style="animation-delay: 0.6s;">
+      <a href="" target="_blank">
+        <img src="static/files/binance.webp" alt="Binance" style="width: 300px; height: auto;">
+      </a>
+    </div>
+    <div class="grid-item" style="animation-delay: 0.9s;">
+      <a href="" target="_blank">
+        <img src="static/files/coinbase.webp" alt="Coinbase" style="width: 300px; height: auto;">
+      </a>
+    </div>
+    <!-- Herhaal dit voor de rest van de items -->
+  </div>
+
+<!-- Testimonials Section -->
+<section class="bg-light py-5 mt-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Wat onze klanten zeggen</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="testimonial text-center p-4 bg-white shadow rounded-lg">
+                    <p>"TradingBot heeft mijn handelservaring veranderd! Het is snel, betrouwbaar en levert geweldige resultaten."</p>
+                    <footer>- Jan de Vries</footer>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial text-center p-4 bg-white shadow rounded-lg">
+                    <p>"De automatische handelsstrategie van TradingBot heeft me geholpen om altijd de juiste keuzes te maken."</p>
+                    <footer>- Sophie Janssen</footer>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial text-center p-4 bg-white shadow rounded-lg">
+                    <p>"Met realtime data en geavanceerde analyses kan ik altijd snel reageren op de markt."</p>
+                    <footer>- Peter van Dijk</footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+  
+
+{% endblock %}
+
+
+
+
+

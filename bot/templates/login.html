@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Inloggen{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Inloggen</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">Gebruikersnaam</label>
+            <input type="text" name="username" class="form-control" id="username" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Wachtwoord</label>
+            <input type="password" name="password" class="form-control" id="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Inloggen</button>
+    </form>
+    <div class="mt-3 text-center">
+        <p>Geen account? <a href="{% url 'register' %}">Registreer hier</a></p>
+    </div>
+</div>
+{% endblock %}
+
+
+
